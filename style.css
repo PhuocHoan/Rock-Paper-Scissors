@@ -1,0 +1,55 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    gap: 5px;
+    background-color: antiquewhite;
+}
+
+#choice button {
+    padding: 10px;
+    margin: 10px;
+    font-size: 100px;
+    background-color: cadetblue;
+    border-radius: 100px;
+    cursor: pointer;
+}
+
+.new-game button {
+    font-size: 20px;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 20px;
+    cursor: pointer;
+    background-color: darkgoldenrod;
+    color: bisque;
+}
+
+#choice button:hover, .new-game button:hover {
+    background-color: rgb(89, 194, 194);
+}
+
+.player, .computer, .result, .score {
+    font-size: 36px;
+    font-weight: 700;
+}
+
+h1 {
+    margin: 10px;
+    color: chocolate;
+    font-size: 48px;
+}
+
+.greenText, .player .score {
+    color: rgba(105, 225, 105, 0.684);
+}
+
+.redText, .computer .score {
+    color: red;
+}

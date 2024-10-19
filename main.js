@@ -1,59 +1,58 @@
-function getComputerChoice() {
-    // random integer from [1 - 3]. formula Math.round(Math.random() * (end - start) + start)
-    let random = Math.round(Math.random() * (3 - 1) + 1);
-    if (random == 1) {
-        return "Rock";
-    } else if (random == 2) {
-        return "Paper";
-    } else {
-        return "Scissors";
-    }
-}
-
-function getHumanChoice() {
-    alert(`
-        1 for "Rock"
-        2 for "Paper"
-        3 for "Scissors"    
-    `);
-    let choice = prompt("Your choice: ");
-    if (choice == 1) {
-        return "Rock";
-    } else if (choice == 2) {
-        return "Paper";
-    } else {
-        return "Scissors";
-    }
-}
-
 function playGame() {
-    let humanScore = 0, computerScore = 0;
+    let playerScore = 0, computerScore = 0;
+    let res = document.querySelector('div.result');
+    let choices = document.querySelectorAll('#choice button');
+    let player_score = document.querySelector('.player .score');
+    let computer_score = document.querySelector('.computer .score');
+    let player_choice = document.querySelector('.player.choice');
+    let computer_choice = document.querySelector('.computer.choice');
+    const computerChoice = ['Rock', 'Paper', 'Scissors'];
 
-    function playRound(humanChoice, computerChoice) {
-        if ((humanChoice == "Scissors" && computerChoice == "Rock") ||
-            (humanChoice == "Paper" && computerChoice == "Scissors") ||
-            (humanChoice == "Rock" && computerChoice == "Paper")) {
-            console.log(`You lose! ${humanChoice} is beaten by ${computerChoice}`);
+    function playRound(playerChoice, computerChoice) {
+        res.classList.remove('greenText', 'redText');
+        if ((playerChoice == "Scissors" && computerChoice == "Rock") ||
+            (playerChoice == "Paper" && computerChoice == "Scissors") ||
+            (playerChoice == "Rock" && computerChoice == "Paper")) {
+            res.classList.add('redText');
+            res.textContent = `You lose!`;
             ++computerScore;
-        } else if ((humanChoice == "Rock" && computerChoice == "Scissors") ||
-            (humanChoice == "Paper" && computerChoice == "Rock") ||
-            (humanChoice == "Scissors" && computerChoice == "Paper")) {
-            console.log(`You win! ${humanChoice} beats ${computerChoice}`);
-            ++humanScore;
+        } else if ((playerChoice == "Rock" && computerChoice == "Scissors") ||
+            (playerChoice == "Paper" && computerChoice == "Rock") ||
+            (playerChoice == "Scissors" && computerChoice == "Paper")) {
+            res.classList.add('greenText');
+            res.textContent = `You win!`;
+            ++playerScore;
         } else {
-            console.log(`You draw! ${humanChoice} is drawn to ${computerChoice}`);
+            res.textContent = `Tie!`;
+        }
+
+        player_choice.textContent = `Player: ${playerChoice}`;
+        computer_choice.textContent = `Computer: ${computerChoice}`;
+        player_score.textContent = `${playerScore}`;
+        computer_score.textContent = `${computerScore}`;
+
+        if (playerScore == 5 || computerScore == 5) {
+            if (playerScore == 5) {
+                res.textContent = 'Player win game!';
+                alert('Player win game!');
+            } else if (computerScore == 5) {
+                res.textContent = 'Computer win game!';
+                alert('Computer win game!');
+            }
+            choices.forEach(button=>{
+                button.removeEventListener('click', playButton);
+            })
         }
     }
 
-    for (let i = 1; i <= 5; ++i) {
-        playRound(getHumanChoice(), getComputerChoice());
+    function playButton(e) {
+        playRound(e.target.className, computerChoice[Math.floor(Math.random() * 2)]);
     }
 
-    if (humanScore > computerScore) {
-        console.log("You win!");
-    } else if (humanScore < computerScore) {
-        console.log("You lose!");
-    } else {
-        console.log("You draw!");
-    }
+    choices.forEach(button=>{
+        button.addEventListener('click', playButton);
+    })
 }
+
+let newGame = document.querySelector('.new-game button');
+newGame.addEventListener('click', playGame);
