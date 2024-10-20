@@ -31,15 +31,15 @@ function playGame() {
         player_score.textContent = `${playerScore}`;
         computer_score.textContent = `${computerScore}`;
 
-        if (playerScore == 5 || computerScore == 5) {
-            if (playerScore == 5) {
+        if (playerScore == 2 || computerScore == 2) {
+            if (playerScore == 2) {
                 res.textContent = 'Player win game!';
                 alert('Player win game!');
-            } else if (computerScore == 5) {
+            } else if (computerScore == 2) {
                 res.textContent = 'Computer win game!';
                 alert('Computer win game!');
             }
-            choices.forEach(button=>{
+            choices.forEach(button => {
                 button.removeEventListener('click', playButton);
             })
         }
@@ -49,10 +49,12 @@ function playGame() {
         playRound(e.target.className, computerChoice[Math.floor(Math.random() * 2)]);
     }
 
-    choices.forEach(button=>{
+    choices.forEach(button => {
         button.addEventListener('click', playButton);
     })
 }
 
 let newGame = document.querySelector('.new-game button');
 newGame.addEventListener('click', playGame);
+
+window.addEventListener('load', playGame);
